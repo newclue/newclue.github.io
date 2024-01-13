@@ -64,6 +64,11 @@ function App() {
   window.requestAnimationFrame(render);
 
   function render() {
+    var eye = [0, 0, 4], center = [0, 0, 0], up = [0, 1, 0];
+    var radians = Date.now() / 10000;
+    vec3.rotateY(eye, eye, center, radians);
+    camera.lookAt(eye, center, up);
+    
     renderer.render(swapChain, view);
     window.requestAnimationFrame(render);
   }
@@ -73,8 +78,9 @@ function App() {
     var width = canvas.width = canvas.clientWidth * dpr;
     var height = canvas.height = canvas.clientHeight * dpr;
     view.setViewport([0, 0, width, height]);
-    var aspect = width / height;
-    camera.setProjection(Projection.ORTHO, -aspect, aspect, -1, 1, 0, 1);
+    //var aspect = width / height;
+    //camera.setProjection(Projection.ORTHO, -aspect, aspect, -1, 1, 0, 1);
+    camera.setProjectionFov(45, width / height, 1.0, 10.0, Fov.VERTICAL);
   }
 
   var out = {
