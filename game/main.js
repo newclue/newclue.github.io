@@ -64,9 +64,6 @@ function App() {
   window.requestAnimationFrame(render);
 
   function render() {
-    var eye = [0, 0, 4], center = [0, 0, 0], up = [0, 1, 0];
-    camera.lookAt(eye, center, up);
-    
     renderer.render(swapChain, view);
     window.requestAnimationFrame(render);
   }
