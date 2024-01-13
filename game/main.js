@@ -71,13 +71,6 @@ function main() {
     camera.setProjection(Projection.ORTHO, -aspect, aspect, -1, 1, 0, 1);
   }
   function render() {
-    var radians = Date.now() / 1000;
-    var transform = mat4.fromRotation(mat4.create(), radians, [0, 0, 1]);
-    var tcm = engine.getTransformManager();
-    var inst = tcm.getInstance(triangle);
-    tcm.setTransform(inst, transform);
-    inst.delete();
-
     renderer.render(swapChain, view);
     window.requestAnimationFrame(render);
   }
