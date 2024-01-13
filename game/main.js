@@ -90,8 +90,8 @@ function App() {
       var w, h;
       var s = Math.tan(fovInDegrees * (Math.PI / 180.0) / 2.0) * near;
       //
-      w = Math.sqrt(aspect);
-      h = 1 / w;
+      w = s * Math.sqrt(aspect);
+      h = s * (1 / w);
       //
       var p = mat4.create();
       mat4.frustum(p, -w, w, -h, h, near, far);
