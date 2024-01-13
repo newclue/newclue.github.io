@@ -79,9 +79,7 @@ function App() {
     var width = canvas.width = canvas.clientWidth * dpr;
     var height = canvas.height = canvas.clientHeight * dpr;
     view.setViewport([0, 0, width, height]);
-    var aspect = width / height;
-    camera.setProjection(Projection.ORTHO, -aspect, aspect, -1, 1, 0, 1);
-    //camera.setProjectionFov(45, width / height, 1.0, 10.0, Fov.VERTICAL);
+    camera.setProjectionFov(45, width / height, 1.0, 10.0, Fov.VERTICAL);
   }
 
   var out = {
