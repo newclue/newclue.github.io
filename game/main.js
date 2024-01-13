@@ -59,6 +59,7 @@ function App() {
   var view = engine.createView();
   view.setCamera(camera);
   view.setScene(scene);
+  renderer.setClearOptions({ clear: true, });
   resize();
   window.addEventListener('resize', resize);
   window.requestAnimationFrame(render);
