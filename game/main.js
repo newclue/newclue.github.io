@@ -2,6 +2,9 @@
 Tutorial: https://github.com/google/filament/blob/main/web/docs/tutorial_triangle.md
 */
 
+// TODO: Why is this needed?
+Object.assign(globalThis, glMatrix);
+
 Filament.init([ 'triangle.filamat', ], main);
 
 function main() {
