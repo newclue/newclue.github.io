@@ -65,7 +65,7 @@ function App() {
   window.requestAnimationFrame(render);
 
   function render() {
-    var eye = [0, 0, 4], center = [0, 0, 0], up = [0, 1, 0];
+    var eye = [0, 0, 1], center = [0, 0, 0], up = [0, 1, 0];
     var radians = Date.now() / 10000;
     vec3.rotateY(eye, eye, center, radians);
     camera.lookAt(eye, center, up);
