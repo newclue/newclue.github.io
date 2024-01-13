@@ -80,7 +80,7 @@ function App() {
     var height = canvas.height = canvas.clientHeight * dpr;
     view.setViewport([0, 0, width, height]);
     //camera.setProjectionFov(45, width / height, 1.0, 10.0, Fov.VERTICAL);
-    setProjectionFovArea(45, width / height, 1.0, 10.0);
+    setProjectionFovArea(camera, 45, width / height, 1.0, 10.0);
   }
 
   function setProjectionFovArea(camera, fovInDegrees, aspect, near, far) {
