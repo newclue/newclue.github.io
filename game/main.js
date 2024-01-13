@@ -79,21 +79,19 @@ function App() {
     var width = canvas.width = canvas.clientWidth * dpr;
     var height = canvas.height = canvas.clientHeight * dpr;
     view.setViewport([0, 0, width, height]);
-    //camera.setProjectionFov(45, width / height, 1.0, 10.0, Fov.VERTICAL);
-    setProjectionFovArea(camera, 45, width / height, 1.0, 10.0);
+    setCameraProjectionAreaFov(camera, 45, width / height, 1.0, 10.0);
   }
 
-  function setProjectionFovArea(camera, fovInDegrees, aspect, near, far) {
+  // Custom Camera$Fov type AREA
+  function setCameraProjectionAreaFov(camera, fovInDegrees, aspect, near, far) {
     camera.setCustomProjection(projection(fovInDegrees, aspect, near, far), near, far);
-    // See filament/src/details/Camera.cpp
+    // A transplant of FCamera::projection from 'google/filament/src/details/Camera.cpp' with modifications for area-based frustum dims.
     function projection(fovInDegrees, aspect, near, far) {
       var w, h;
       var s = Math.tan(fovInDegrees * (Math.PI / 180.0) / 2.0) * near;
-      //
       var x = Math.sqrt(aspect);
       w = s * x;
       h = s * (1 / x);
-      //
       var p = mat4.create();
       mat4.frustum(p, -w, w, -h, h, near, far);
       if (far === Infinity) {
@@ -104,7 +102,6 @@ function App() {
       return p;
     }
   }
-
 
   var out = {
     canvas,
