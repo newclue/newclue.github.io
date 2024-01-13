@@ -64,9 +64,9 @@ function App() {
   window.addEventListener('resize', resize);
   window.requestAnimationFrame(render);
 
-  var radians = Date.now() / 10000;
-  var eye = [0, 0, 1], center = [0, 0, 0], up = [0, 1, 0];
   function render() {
+    var radians = Date.now() / 10000;
+    var eye = [0, 0, 3], center = [0, 0, 0], up = [0, 1, 0];
     vec3.rotateY(eye, eye, center, radians);
     camera.lookAt(eye, center, up);
     
@@ -111,12 +111,6 @@ function App() {
     renderer,
     camera,
     view,
-
-    // DEBUG
-    eye,
-    center,
-    up,
-    radians,
   };
   return out;
 }
