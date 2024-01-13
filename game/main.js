@@ -47,7 +47,7 @@ function App() {
   var mat = engine.createMaterial('triangle.filamat');
   var matinst = mat.getDefaultInstance();
   Filament.RenderableManager.Builder(1)
-    .boundingBox({ center: [-1, -1, -1], halfExtent: [1, 1, 1] })
+    .boundingBox({ center: [ -1, -1, -1, ], halfExtent: [ 1, 1, 1, ] })
     .material(0, matinst)
     .geometry(0, PrimitiveType.TRIANGLES, vb, ib)
     .build(engine, triangle);
