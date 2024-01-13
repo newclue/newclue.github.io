@@ -74,8 +74,8 @@ function main() {
   vec3.buffer = vec3.create();
   mat4.buffer = mat4.create();
   function render() {
-    
-    const transform = mat4.fromTranslation(mat4.buffer, vec3.set(vec3.buffer, 0.5, 0.5, 0.0));
+    vec3.set(vec3.buffer, 0.5, 0.5, 0.0);
+    const transform = mat4.fromTranslation(mat4.buffer, vec3.buffer);
     const tcm = this.engine.getTransformManager();
     const inst = tcm.getInstance(camera);
     tcm.setTransform(inst, transform);
