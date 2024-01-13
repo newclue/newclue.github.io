@@ -57,8 +57,6 @@ function main() {
   
   renderer.setClearOptions({clearColor: [0.0, 0.1, 0.2, 1.0], clear: true});
 
-  resize();
-
   function resize() {
     var dpr = window.devicePixelRatio;
     var width = canvas.width = canvas.clientWidth * dpr;
@@ -69,6 +67,12 @@ function main() {
     camera.setProjection(Projection.ORTHO, -aspect, aspect, -1, 1, 0, 1);
   }
   function render() {
+    
+    if (resized) {
+      resize();
+      resized = false;
+    }
+    
     var radians = Date.now() / 1000;
     var transform = mat4.fromRotation(mat4.create(), radians, [0, 0, 1]);
     var tcm = engine.getTransformManager();
@@ -80,6 +84,10 @@ function main() {
     window.requestAnimationFrame(render);
   }
 
-  window.addEventListener('resize', resize);
+  var resized = true; // initial resize
+  window.addEventListener('resize', function () {
+    resized = true;
+  });
+  
   window.requestAnimationFrame(render);
 }
