@@ -71,13 +71,6 @@ function main() {
   window.requestAnimationFrame(render);
   
   function render() {
-    vec3.set(vec3.buffer, 0.5, 0.5, 0.0);
-    const transform = mat4.fromTranslation(mat4.buffer, vec3.buffer);
-    const tcm = this.engine.getTransformManager();
-    const inst = tcm.getInstance(camera);
-    tcm.setTransform(inst, transform);
-    inst.delete();
-    
     renderer.render(swapChain, view);
     window.requestAnimationFrame(render);
   }
