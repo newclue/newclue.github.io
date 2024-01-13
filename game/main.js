@@ -79,8 +79,31 @@ function App() {
     var width = canvas.width = canvas.clientWidth * dpr;
     var height = canvas.height = canvas.clientHeight * dpr;
     view.setViewport([0, 0, width, height]);
-    camera.setProjectionFov(45, width / height, 1.0, 10.0, Fov.VERTICAL);
+    //camera.setProjectionFov(45, width / height, 1.0, 10.0, Fov.VERTICAL);
+    setProjectionFovArea(45, width / height, 1.0, 10.0);
   }
+
+  function setProjectionFovArea(camera, fovInDegrees, aspect, near, far) {
+    camera.setCustomProjection(projection(fovInDegrees, aspect, near, far), near, far);
+    // See filament/src/details/Camera.cpp
+    function projection(fovInDegrees, aspect, near, far) {
+      var w, h;
+      var s = Math.tan(fovInDegrees * (Math.PI / 180.0) / 2.0) * near;
+      //
+      w = Math.sqrt(aspect);
+      h = 1 / w;
+      //
+      var p = mat4.create();
+      mat4.frustum(p, -w, w, -h, h, near, far);
+      if (far === Infinity) {
+        // 4(row-1)+(column-1) = index
+        p[5] = -1.0;         // lim(far->inf) = -1
+        p[9] = -2.0 * near;  // lim(far->inf) = -2*near
+      }
+      return p;
+    }
+  }
+
 
   var out = {
     canvas,
@@ -94,25 +117,9 @@ function App() {
   return out;
 }
 
-if (typeof glMatrix !== 'undefined') {
-  // This is a hack because glMatrix modules are not globally available on load. They are all within `glMatrix`.
-  // The Filament glMatrix extensions expect global availability.
-  Object.assign(globalThis, glMatrix);
-  
-  loadBufferExtensions();
-}
-function loadBufferExtensions() {
-  // Work buffers to reduce calls to `create()`.
-  mat2.buffer = mat2.create();
-  mat2d.buffer = mat2d.create();
-  mat3.buffer = mat3.create();
-  mat4.buffer = mat4.create();
-  quat.buffer = quat.create();
-  quat2.buffer = quat2.create();
-  vec2.buffer = vec2.create();
-  vec3.buffer = vec3.create();
-  vec4.buffer = vec4.create();
-}
+// This is a hack because glMatrix modules are not globally available on load. They are all within `glMatrix`.
+// The Filament glMatrix extensions expect global availability.
+Object.assign(globalThis, glMatrix);
 
 Filament.init([ 'triangle.filamat', ], function () {
   // Expose app for debugging in the dev console.
