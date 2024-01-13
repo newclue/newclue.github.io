@@ -2,7 +2,7 @@
 Tutorial: https://github.com/google/filament/blob/main/web/docs/tutorial_triangle.md
 */
 
-// TODO: Why is this needed?
+// TODO: Why is this needed? Should I make a custom file?
 Object.assign(globalThis, glMatrix);
 
 Filament.init([ 'triangle.filamat', ], main);
