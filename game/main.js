@@ -59,10 +59,6 @@ function App() {
   var view = engine.createView();
   view.setCamera(camera);
   view.setScene(scene);
-
-  var eye = [ 0, 0, 0, ], center = [ 0, 0, 0, ], up = [ 0, 0, 1, ];
-  camera.lookAt(eye, center, up);
-  
   resize();
   window.addEventListener('resize', resize);
   window.requestAnimationFrame(render);
