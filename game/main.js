@@ -2,7 +2,7 @@
 Tutorial: https://github.com/google/filament/blob/main/web/docs/tutorial_triangle.md
 */
 
-function main() {
+function App() {
   // Convenient aliases
   var VertexAttribute = Filament.VertexAttribute;
   var AttributeType = Filament.VertexBuffer$AttributeType;
@@ -79,6 +79,17 @@ function main() {
     var aspect = width / height;
     camera.setProjection(Projection.ORTHO, -aspect, aspect, -1, 1, 0, 1);
   }
+
+  var out = {
+    canvas,
+    engine,
+    scene,
+    swapChain,
+    renderer,
+    camera,
+    view,
+  };
+  return out;
 }
 
 if (typeof glMatrix !== 'undefined') {
@@ -101,4 +112,7 @@ function loadBufferExtensions() {
   vec4.buffer = vec4.create();
 }
 
-Filament.init([ 'triangle.filamat', ], main);
+Filament.init([ 'triangle.filamat', ], function () {
+  // Expose app for debugging in the dev console.
+  window.app = App();
+});
