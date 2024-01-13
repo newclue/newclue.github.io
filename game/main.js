@@ -60,12 +60,9 @@ function main() {
   resize();
 
   function resize() {
-    /*var dpr = window.devicePixelRatio;
-    var width = canvas.clientWidth * dpr;
-    var height = canvas.clientHeight * dpr;*/
-    const dpr = window.devicePixelRatio;
-    const width = canvas.width = window.innerWidth * dpr;
-    const height = canvas.height = window.innerHeight * dpr;
+    var dpr = window.devicePixelRatio;
+    var width = canvas.width = canvas.clientWidth * dpr;
+    var height = canvas.height = canvas.clientHeight * dpr;
     view.setViewport([0, 0, width, height]);
     var aspect = width / height;
     var Projection = Filament.Camera$Projection;
