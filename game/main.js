@@ -2,17 +2,27 @@
 Tutorial: https://github.com/google/filament/blob/main/web/docs/tutorial_triangle.md
 */
 
-// TODO: Why is this needed? Should I make a custom file?
-Object.assign(globalThis, glMatrix);
+function glMatrixExtension() {
+  // TODO: Why is this needed? Should I make a custom file?
+  Object.assign(globalThis, glMatrix);
+
+  vec2.buffer = vec2.create();
+  vec3.buffer = vec3.create();
+  mat4.buffer = mat4.create();
+}
 
 Filament.init([ 'triangle.filamat', ], main);
 
 function main() {
-  // glMatrix buffers extension
-  vec2.buffer = vec2.create();
-  vec3.buffer = vec3.create();
-  mat4.buffer = mat4.create();
   
+  var canvas = document.getElementsByTagName('canvas')[0];
+  
+  var engine = Filament.Engine.create(canvas);
+  var scene = engine.createScene();
+  
+  var triangle = Filament.EntityManager.get().create();
+  scene.addEntity(triangle);
+
   ////
   var TRIANGLE_POSITIONS = new Float32Array([
     1, 0,
@@ -40,14 +50,6 @@ function main() {
     .build(engine);
   ib.setBuffer(engine, new Uint16Array([0, 1, 2]));
   ////
-  
-  var canvas = document.getElementsByTagName('canvas')[0];
-  
-  var engine = Filament.Engine.create(canvas);
-  var scene = engine.createScene();
-  
-  var triangle = Filament.EntityManager.get().create();
-  scene.addEntity(triangle);
 
   var mat = engine.createMaterial('triangle.filamat');
   var matinst = mat.getDefaultInstance();
