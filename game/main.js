@@ -2,13 +2,24 @@
 Tutorial: https://github.com/google/filament/blob/main/web/docs/tutorial_triangle.md
 */
 
-function glMatrixExtension() {
-  // TODO: Why is this needed? Should I make a custom file?
+if (typeof glMatrix !== 'undefined') {
+  // This is a hack because glMatrix modules are not globally available on load. They are all within `glMatrix`.
+  // The Filament glMatrix extensions expect global availability.
   Object.assign(globalThis, glMatrix);
-
+  
+  loadBufferExtensions();
+}
+function loadBufferExtensions() {
+  // Work buffers to reduce calls to `create()`.
+  mat2.buffer = mat2.create();
+  mat2d.buffer = mat2d.create();
+  mat3.buffer = mat3.create();
+  mat4.buffer = mat4.create();
+  quat.buffer = quat.create();
+  quat2.buffer = quat2.create();
   vec2.buffer = vec2.create();
   vec3.buffer = vec3.create();
-  mat4.buffer = mat4.create();
+  vec4.buffer = vec4.create();
 }
 
 Filament.init([ 'triangle.filamat', ], main);
