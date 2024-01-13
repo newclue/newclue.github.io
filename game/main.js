@@ -2,6 +2,8 @@
 Tutorial: https://github.com/google/filament/blob/main/web/docs/tutorial_triangle.md
 */
 
+Filament.init([ 'triangle.filamat', ], main);
+
 function main() {
   var canvas = document.getElementsByTagName('canvas')[0];
   var engine = Filament.Engine.create(canvas);
@@ -78,4 +80,3 @@ function main() {
   window.addEventListener('resize', resize);
   window.requestAnimationFrame(render);
 }
-Filament.init([ 'triangle.filamat', ], main);
