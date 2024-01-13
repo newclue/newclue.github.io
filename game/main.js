@@ -8,12 +8,12 @@ Object.assign(globalThis, glMatrix);
 Filament.init([ 'triangle.filamat', ], main);
 
 function main() {
-  var canvas = document.getElementsByTagName('canvas')[0];
-  var engine = Filament.Engine.create(canvas);
-  var scene = engine.createScene();
-  var triangle = Filament.EntityManager.get().create();
-  scene.addEntity(triangle);
-
+  // glMatrix buffers extension
+  vec2.buffer = vec2.create();
+  vec3.buffer = vec3.create();
+  mat4.buffer = mat4.create();
+  
+  ////
   var TRIANGLE_POSITIONS = new Float32Array([
     1, 0,
     Math.cos(Math.PI * 2 / 3), Math.sin(Math.PI * 2 / 3),
@@ -39,6 +39,15 @@ function main() {
     .bufferType(Filament.IndexBuffer$IndexType.USHORT)
     .build(engine);
   ib.setBuffer(engine, new Uint16Array([0, 1, 2]));
+  ////
+  
+  var canvas = document.getElementsByTagName('canvas')[0];
+  
+  var engine = Filament.Engine.create(canvas);
+  var scene = engine.createScene();
+  
+  var triangle = Filament.EntityManager.get().create();
+  scene.addEntity(triangle);
 
   var mat = engine.createMaterial('triangle.filamat');
   var matinst = mat.getDefaultInstance();
@@ -60,19 +69,7 @@ function main() {
   resize();
   window.addEventListener('resize', resize);
   window.requestAnimationFrame(render);
-
-  function resize() {
-    var dpr = window.devicePixelRatio;
-    var width = canvas.width = canvas.clientWidth * dpr;
-    var height = canvas.height = canvas.clientHeight * dpr;
-    view.setViewport([0, 0, width, height]);
-    var aspect = width / height;
-    var Projection = Filament.Camera$Projection;
-    camera.setProjection(Projection.ORTHO, -aspect, aspect, -1, 1, 0, 1);
-  }
-
-  vec3.buffer = vec3.create();
-  mat4.buffer = mat4.create();
+  
   function render() {
     vec3.set(vec3.buffer, 0.5, 0.5, 0.0);
     const transform = mat4.fromTranslation(mat4.buffer, vec3.buffer);
@@ -83,5 +80,15 @@ function main() {
     
     renderer.render(swapChain, view);
     window.requestAnimationFrame(render);
+  }
+
+  function resize() {
+    var dpr = window.devicePixelRatio;
+    var width = canvas.width = canvas.clientWidth * dpr;
+    var height = canvas.height = canvas.clientHeight * dpr;
+    view.setViewport([0, 0, width, height]);
+    var aspect = width / height;
+    var Projection = Filament.Camera$Projection;
+    camera.setProjection(Projection.ORTHO, -aspect, aspect, -1, 1, 0, 1);
   }
 }
