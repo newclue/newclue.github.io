@@ -22,12 +22,14 @@ function App() {
   scene.addEntity(triangle);
 
   var TRIANGLE_POSITIONS = new Float32Array([
-    1, 1, 1, -1, -1, -1, -1, 1,
+    1, 0,
+    -1, -1,
+    -1, 1,
   ]);
-  var TRIANGLE_COLORS = new Uint32Array([ 0xffff0000, 0xff00ff00, 0xff0000ff, 0xffff0000, ]);
+  var TRIANGLE_COLORS = new Uint32Array([ 0xffff0000, 0xff00ff00, 0xff0000ff, ]);
   
   var vb = Filament.VertexBuffer.Builder()
-    .vertexCount(4)
+    .vertexCount(3)
     .bufferCount(2)
     .attribute(VertexAttribute.POSITION, 0, AttributeType.FLOAT2, 0, 8)
     .attribute(VertexAttribute.COLOR, 1, AttributeType.UBYTE4, 0, 4)
@@ -47,7 +49,7 @@ function App() {
   Filament.RenderableManager.Builder(1)
     .boundingBox({ center: [ -1, -1, -1, ], halfExtent: [ 1, 1, 1, ] })
     .material(0, matinst)
-    .geometry(0, PrimitiveType.TRIANGLE_FAN, vb, ib)
+    .geometry(0, PrimitiveType.TRIANGLES, vb, ib)
     .build(engine, triangle);
   ////
   
