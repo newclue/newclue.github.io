@@ -67,7 +67,7 @@ function App() {
   function render() {
     var radians = Date.now() / 5000;
     var eye = [0, 0, 3], center = [0, 0, 0], up = [0, 1, 0];
-    vec3.rotateY(eye, eye, center, radians);
+    vec3.rotateZ(eye, eye, center, radians);
     camera.lookAt(eye, center, up);
     
     renderer.render(swapChain, view);
