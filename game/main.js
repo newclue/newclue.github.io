@@ -124,6 +124,37 @@ function App() {
     out[2] = a[0] * b[4] + a[1] * b[5];
     return out;
   }
+
+  function generateHexagonalGridPoints(max) {
+    var len = max ** 2 ** 2;
+    var out = new Float32Array(len);
+    var i = 0, j = 0, k = 0;
+    var p = 0;
+    while (i < max) {
+      out[p + 0] = i;
+      out[p + 1] = j;
+      out[p + 2] = k;
+      k++;
+      p += 3;
+      if (k === max) {
+        k = 0; j++;
+      }
+      if (j == max) {
+        j = 0; i++;
+      }
+    }
+    var sequence = out;
+    var out = [];
+    var buf = new Float32Array(2);
+    var p = 0, q;
+    while (p + 3 < len) {
+      q = sequence.subarray(p, p + 3);
+      p += 3;
+      fromHexagonal(buf, q);
+      out.push(buf[0], buf[1]);
+    }
+    return new Float32Array(out);
+  }
   ////
 
   var out = {
