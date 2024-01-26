@@ -182,7 +182,10 @@ function App() {
       inst.delete();
     }
   }
+  
   spawnGrid();
+  var n = 1 / 16;
+  app.camera.setScaling([ n, n, ]);
   ////
 
   var out = {
