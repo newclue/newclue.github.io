@@ -52,7 +52,7 @@ function App() {
     .geometry(0, PrimitiveType.TRIANGLES, vb, ib)
     .build(engine, triangle);
   ////
-  
+
   var swapChain = engine.createSwapChain();
   var renderer = engine.createRenderer();
   var camera = engine.createCamera(Filament.EntityManager.get().create());
@@ -170,7 +170,6 @@ function App() {
     }
   }
   spawnGrid();
-  
   ////
 
   var out = {
