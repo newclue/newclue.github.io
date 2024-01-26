@@ -74,11 +74,11 @@ function App() {
     var width = canvas.width = canvas.clientWidth * dpr;
     var height = canvas.height = canvas.clientHeight * dpr;
     view.setViewport([0, 0, width, height]);
-    setCameraProjectionAreaFov(camera, 45, width / height, 1.0, 10.0);
+    setCameraProjectionDiagonalFov(camera, 45, width / height, 1.0, 10.0);
   }
 
-  // Custom Camera$Fov type AREA
-  function setCameraProjectionAreaFov(camera, fovInDegrees, aspect, near, far) {
+  // Custom Camera$Fov type DIAGONAL, which keeps the area constant rather than the height or width.
+  function setCameraProjectionDiagonalFov(camera, fovInDegrees, aspect, near, far) {
     camera.setCustomProjection(projection(fovInDegrees, aspect, near, far), near, far);
     // A transplant of FCamera::projection from 'google/filament/src/details/Camera.cpp' with modifications for area-based frustum dims.
     function projection(fovInDegrees, aspect, near, far) {
@@ -97,6 +97,32 @@ function App() {
       return p;
     }
   }
+
+  ////
+  /**
+   * @param {vec2} out - resulting cartesian coordinate
+   * @param {vec3} a - hexagonal coordinate
+   */
+  var n = Math.sqrt(0.75);
+  var m1 = new Float32Array([ 1, 0.5, -0.5, 0, n, n, ]);
+  function fromHexagonal(out, a) {
+    var b = m1;
+    out[0] = a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+    out[1] = a[0] * b[3] + a[1] * b[4] + a[2] * b[5];
+  }
+  /**
+   * @param {vec3} out - resulting hexagonal coordinate
+   * @param {vec2} a - cartesian coordinate
+   */
+  var n = 0.5 * Math.sqrt(1 / 0.75);
+  var m2 = new Float32Array([ 1, 0, 0, n, 0, n, ]);
+  function toHexagonal(out, a) {
+    var b = m2;
+    out[0] = a[0] * m[0] + a[1] * m[1];
+    out[1] = a[0] * m[2] + a[1] * m[3];
+    out[2] = a[0] * m[4] + a[1] * m[5];
+  }
+  ////
 
   var out = {
     canvas,
