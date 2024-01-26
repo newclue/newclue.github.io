@@ -18,9 +18,6 @@ function App() {
   var scene = engine.createScene();
   
   ////
-  var triangle = Filament.EntityManager.get().create();
-  scene.addEntity(triangle);
-
   var TRIANGLE_POSITIONS = new Float32Array([
     1, 0,
     -1, -1,
