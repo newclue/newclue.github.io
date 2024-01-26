@@ -140,7 +140,7 @@ function App() {
     var out = [];
     var buf = new Float32Array(2);
     var p = 0, q;
-    while (p + 3 < len) {
+    while (p + 3 < sequence.length) {
       q = sequence.subarray(p, p + 3);
       p += 3;
       fromHexagonal(buf, q);
