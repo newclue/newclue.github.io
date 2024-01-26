@@ -65,6 +65,13 @@ function App() {
   window.requestAnimationFrame(render);
 
   function render() {
+    const radians = Date.now() / 1000;
+    const transform = mat4.fromRotation(mat4.create(), radians, [0, 0, 1]);
+    const tcm = engine.getTransformManager();
+    const inst = tcm.getInstance(triangle);
+    tcm.setTransform(inst, transform);
+    inst.delete();
+    
     renderer.render(swapChain, view);
     window.requestAnimationFrame(render);
   }
@@ -74,7 +81,9 @@ function App() {
     var width = canvas.width = canvas.clientWidth * dpr;
     var height = canvas.height = canvas.clientHeight * dpr;
     view.setViewport([0, 0, width, height]);
-    setCameraProjectionDiagonalFov(camera, 45, width / height, 1.0, 10.0);
+    var aspect = width / height;
+    camera.setProjection(Projection.ORTHO, -aspect, aspect, -1, 1, 0, 1);
+    //setCameraProjectionDiagonalFov(camera, 45, width / height, 1.0, 10.0);
   }
 
   // Custom Camera$Fov type DIAGONAL, which keeps the area constant rather than the height or width.
