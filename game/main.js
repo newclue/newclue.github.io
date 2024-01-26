@@ -46,7 +46,7 @@ function App() {
 
   var mat = engine.createMaterial('triangle.filamat');
   var matinst = mat.getDefaultInstance();
-  Filament.RenderableManager.Builder(1)
+  var triangleRenderableBuilder = Filament.RenderableManager.Builder(1)
     .boundingBox({ center: [ -1, -1, -1, ], halfExtent: [ 1, 1, 1, ] })
     .material(0, matinst)
     .geometry(0, PrimitiveType.TRIANGLES, vb, ib)
@@ -159,14 +159,22 @@ function App() {
   }
 
   function spawnGrid() {
+    function spawnTriangle() {
+      var e = Filament.EntityManager.get().create();
+      triangleRenderableBuilder.build(engine, e);
+      scene.addEntity(e);
+      return e;
+    }
     var points = generateHexagonalGridPoints(2);
     var m = mat4.create();
     var tcm = engine.getTransformManager();
-    for (var e, i = 0; i < points.length; i += 3) {
-      e = points.subarray(i, i + 3);
-      var transform = mat4.fromTranslation(m, e);
-      var inst = tcm.getInstance(triangle);
+    for (var i = 0; i < points.length; i += 3) {
+      var entity = spawnTriangle();
+      var v = points.subarray(i, i + 3);
+      var transform = mat4.fromTranslation(m, v);
+      var inst = tcm.getInstance(entity);
       tcm.setTransform(inst, transform);
+      inst.delete();
     }
   }
   spawnGrid();
