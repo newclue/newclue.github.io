@@ -175,6 +175,7 @@ function App() {
     for (var i = 0; i < points.length; i += 3) {
       var entity = spawnTriangle();
       var v = points.subarray(i, i + 3);
+      vec3.scale(v, v, 10);
       var transform = mat4.fromTranslation(m, v);
       var inst = tcm.getInstance(entity);
       tcm.setTransform(inst, transform);
