@@ -118,9 +118,9 @@ function App() {
   var m2 = new Float32Array([ 1, 0, 0, n, 0, n, ]);
   function toHexagonal(out, a) {
     var b = m2;
-    out[0] = a[0] * m[0] + a[1] * m[1];
-    out[1] = a[0] * m[2] + a[1] * m[3];
-    out[2] = a[0] * m[4] + a[1] * m[5];
+    out[0] = a[0] * b[0] + a[1] * b[1];
+    out[1] = a[0] * b[2] + a[1] * b[3];
+    out[2] = a[0] * b[4] + a[1] * b[5];
   }
   ////
 
