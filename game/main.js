@@ -127,25 +127,16 @@ function App() {
     return out;
   }
 
-  function generateHexagonalGridPoints(max) {
-    var len = max ** 2 ** 2;
-    var out = new Float32Array(len);
-    var i = 0, j = 0, k = 0;
-    var p = 0;
-    while (i < max) {
-      out[p + 0] = i;
-      out[p + 1] = j;
-      out[p + 2] = k;
-      k++;
-      p += 3;
-      if (k === max) {
-        k = 0; j++;
-      }
-      if (j == max) {
-        j = 0; i++;
-      }
-    }
-    var sequence = out;
+  function generateHexagonalGridPoints(radius) {
+    var sequence = new Float32Array([
+      0, 0, 0,
+      0, 0, 1,
+      0, 0, -1,
+      0, 1, 0,
+      0, -1, 0,
+      1, 0, 0,
+      -1, 0, 0,
+    ]);
     var out = [];
     var buf = new Float32Array(2);
     var p = 0, q;
@@ -158,7 +149,7 @@ function App() {
     return new Float32Array(out);
   }
 
-  function spawnHexGrid(span) {
+  function spawnGrid() {
     function spawnTriangle() {
       var e = Filament.EntityManager.get().create();
       Filament.RenderableManager.Builder(1)
@@ -169,7 +160,7 @@ function App() {
       scene.addEntity(e);
       return e;
     }
-    var points = generateHexagonalGridPoints(span);
+    var points = generateHexagonalGridPoints();
     var m = mat4.create();
     var tcm = engine.getTransformManager();
     for (var i = 0; i < points.length; i += 3) {
@@ -183,9 +174,8 @@ function App() {
     }
   }
 
-  var span = 3;
-  spawnHexGrid(span);
-  var n = 1 / (10 * span);
+  spawnGrid();
+  var n = 1 / 256;
   camera.setScaling([ n, n, ]);
   ////
 
