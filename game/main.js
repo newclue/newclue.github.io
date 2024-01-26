@@ -46,7 +46,7 @@ function App() {
 
   var mat = engine.createMaterial('triangle.filamat');
   var matinst = mat.getDefaultInstance();
-  var triangleRenderableBuilder = Filament.RenderableManager.Builder(1)
+  Filament.RenderableManager.Builder(1)
     .boundingBox({ center: [ -1, -1, -1, ], halfExtent: [ 1, 1, 1, ] })
     .material(0, matinst)
     .geometry(0, PrimitiveType.TRIANGLES, vb, ib)
@@ -161,7 +161,11 @@ function App() {
   function spawnGrid() {
     function spawnTriangle() {
       var e = Filament.EntityManager.get().create();
-      triangleRenderableBuilder.build(engine, e);
+      Filament.RenderableManager.Builder(1)
+        .boundingBox({ center: [ -1, -1, -1, ], halfExtent: [ 1, 1, 1, ] })
+        .material(0, matinst)
+        .geometry(0, PrimitiveType.TRIANGLES, vb, ib)
+        .build(engine, e);
       scene.addEntity(e);
       return e;
     }
