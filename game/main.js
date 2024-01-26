@@ -184,7 +184,7 @@ function App() {
   }
 
   var span = 3;
-  spawnGrid(span);
+  spawnHexGrid(span);
   var n = 1 / (10 * span);
   camera.setScaling([ n, n, ]);
   ////
