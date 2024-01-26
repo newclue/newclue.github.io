@@ -64,14 +64,20 @@ function App() {
   window.addEventListener('resize', resize);
   window.requestAnimationFrame(render);
 
+  function spawnGrid() {
+    var points = generateHexagonalGridPoints(2);
+    var m = mat4.create();
+    var tcm = engine.getTransformManager();
+    for (var e, i = 0; i < points.length; i += 3) {
+      e = points.subarray(i, i + 3);
+      var transform = mat4.fromTranslation(m, e);
+      var inst = tcm.getInstance(triangle);
+      tcm.setTransform(inst, transform);
+    }
+  }
+  spawnGrid();
+  
   function render() {
-    const radians = Date.now() / 1000;
-    const transform = mat4.fromRotation(mat4.create(), radians, [0, 0, 1]);
-    const tcm = engine.getTransformManager();
-    const inst = tcm.getInstance(triangle);
-    tcm.setTransform(inst, transform);
-    inst.delete();
-    
     renderer.render(swapChain, view);
     window.requestAnimationFrame(render);
   }
@@ -160,7 +166,7 @@ function App() {
       q = sequence.subarray(p, p + 3);
       p += 3;
       fromHexagonal(buf, q);
-      out.push(buf[0], buf[1]);
+      out.push(buf[0], buf[1], 0);
     }
     return new Float32Array(out);
   }
