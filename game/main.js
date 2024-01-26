@@ -158,7 +158,7 @@ function App() {
     return new Float32Array(out);
   }
 
-  function spawnGrid() {
+  function spawnHexGrid(span) {
     function spawnTriangle() {
       var e = Filament.EntityManager.get().create();
       Filament.RenderableManager.Builder(1)
@@ -169,7 +169,7 @@ function App() {
       scene.addEntity(e);
       return e;
     }
-    var points = generateHexagonalGridPoints(2);
+    var points = generateHexagonalGridPoints(span);
     var m = mat4.create();
     var tcm = engine.getTransformManager();
     for (var i = 0; i < points.length; i += 3) {
@@ -183,8 +183,9 @@ function App() {
     }
   }
 
-  spawnGrid();
-  var n = 1 / 16;
+  var span = 3;
+  spawnGrid(span);
+  var n = 1 / (10 * span);
   camera.setScaling([ n, n, ]);
   ////
 
