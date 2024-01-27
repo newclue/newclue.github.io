@@ -167,14 +167,17 @@ function App() {
   }
 
   function spawnGrid() {
+    var scale = 10;
     var points = generateHexagonalGridPoints();
     var m = mat4.create();
+    var q = quat4.create();
+    var s = vec3.set(vec3.create(), scale, scale, 1);
     var tcm = engine.getTransformManager();
     for (var i = 0; i < points.length; i += 3) {
       var entity = spawnTriangle();
       var v = points.subarray(i, i + 3);
-      vec3.scale(v, v, 10);
-      var transform = mat4.fromTranslation(m, v);
+      vec3.scale(v, v, scale);
+      var transform = mat4.fromRotationTranslationScale(m, q, v, s);
       var inst = tcm.getInstance(entity);
       tcm.setTransform(inst, transform);
       inst.delete();
