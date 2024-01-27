@@ -18,15 +18,21 @@ function App() {
   var scene = engine.createScene();
   
   ////
-  var TRIANGLE_POSITIONS = new Float32Array([
-    1, 0,
-    -1, -1,
-    -1, 1,
-  ]);
-  var TRIANGLE_COLORS = new Uint32Array([ 0xffff0000, 0xff00ff00, 0xff0000ff, ]);
+  function regularPolygon(numSides) {
+    var len = numSides * 2;
+    var out = new Float32Array(len);
+    var stride = (Math.PI * 2) / numSides;
+    for (var i = 0, r = 0; i < len; i += 2, r += stride) {
+      out[i] = Math.cos(r);
+      out[i + 1] = Math.sin(r);
+    }
+    return out;
+  }
+  var TRIANGLE_POSITIONS = regularPolygon(6);
+  var TRIANGLE_COLORS = new Uint32Array([ 0xffff0000, 0xff00ff00, 0xff0000ff, 0xffff0000, 0xff00ff00, 0xff0000ff, ]);
   
   var vb = Filament.VertexBuffer.Builder()
-    .vertexCount(3)
+    .vertexCount(6)
     .bufferCount(2)
     .attribute(VertexAttribute.POSITION, 0, AttributeType.FLOAT2, 0, 8)
     .attribute(VertexAttribute.COLOR, 1, AttributeType.UBYTE4, 0, 4)
