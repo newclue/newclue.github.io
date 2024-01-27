@@ -43,7 +43,7 @@ function App() {
   vb.setBufferAt(engine, 1, TRIANGLE_COLORS);
   
   var ib = Filament.IndexBuffer.Builder()
-    .indexCount(3 * 5)
+    .indexCount(3 * 6)
     .bufferType(IndexType.USHORT)
     .build(engine);
   ib.setBuffer(engine, new Uint16Array([
