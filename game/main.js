@@ -167,11 +167,11 @@ function App() {
   }
 
   function spawnGrid() {
-    var scale = 10;
+    var scale = 1;
     var points = generateHexagonalGridPoints();
     var m = mat4.create();
     var q = quat.create();
-    var s = vec3.set(vec3.create(), scale, scale, 1);
+    var s = vec3.set(vec3.create(), scale / 2, scale / 2, 1);
     var tcm = engine.getTransformManager();
     for (var i = 0; i < points.length; i += 3) {
       var entity = spawnTriangle();
@@ -185,7 +185,7 @@ function App() {
   }
 
   spawnGrid();
-  var n = 1 / 16;
+  var n = 1 / 4;
   camera.setScaling([ n, n, ]);
   ////
 
