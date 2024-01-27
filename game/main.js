@@ -42,10 +42,10 @@ function App() {
   vb.setBufferAt(engine, 1, TRIANGLE_COLORS);
   
   var ib = Filament.IndexBuffer.Builder()
-    .indexCount(3)
+    .indexCount(7)
     .bufferType(IndexType.USHORT)
     .build(engine);
-  ib.setBuffer(engine, new Uint16Array([0, 1, 2]));
+  ib.setBuffer(engine, new Uint16Array([0, 1, 2, 3, 4, 5, 0]));
 
   var mat = engine.createMaterial('triangle.filamat');
   var matinst = mat.getDefaultInstance();
