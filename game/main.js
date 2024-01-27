@@ -43,11 +43,17 @@ function App() {
 
   var mat = engine.createMaterial('triangle.filamat');
   var matinst = mat.getDefaultInstance();
-  Filament.RenderableManager.Builder(1)
-    .boundingBox({ center: [ -1, -1, -1, ], halfExtent: [ 1, 1, 1, ] })
-    .material(0, matinst)
-    .geometry(0, PrimitiveType.TRIANGLES, vb, ib)
-    .build(engine, triangle);
+  
+  function spawnTriangle() {
+    var e = Filament.EntityManager.get().create();
+    Filament.RenderableManager.Builder(1)
+      .boundingBox({ center: [ -1, -1, -1, ], halfExtent: [ 1, 1, 1, ] })
+      .material(0, matinst)
+      .geometry(0, PrimitiveType.TRIANGLES, vb, ib)
+      .build(engine, e);
+    scene.addEntity(e);
+    return e;
+  }
   ////
 
   var swapChain = engine.createSwapChain();
@@ -147,16 +153,6 @@ function App() {
   }
 
   function spawnGrid() {
-    function spawnTriangle() {
-      var e = Filament.EntityManager.get().create();
-      Filament.RenderableManager.Builder(1)
-        .boundingBox({ center: [ -1, -1, -1, ], halfExtent: [ 1, 1, 1, ] })
-        .material(0, matinst)
-        .geometry(0, PrimitiveType.TRIANGLES, vb, ib)
-        .build(engine, e);
-      scene.addEntity(e);
-      return e;
-    }
     var points = generateHexagonalGridPoints();
     var m = mat4.create();
     var tcm = engine.getTransformManager();
