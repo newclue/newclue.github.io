@@ -24,8 +24,8 @@ function App() {
     var stride = (Math.PI * 2) / numSides;
     out[0] = out[1] = 0;
     for (var i = 2, r = 0; i < len; i += 2, r += stride) {
-      out[i] = Math.cos(r);
-      out[i + 1] = Math.sin(r);
+      out[i] = Math.sin(r);
+      out[i + 1] = Math.cos(r);
     }
     return out;
   }
