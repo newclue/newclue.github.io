@@ -30,7 +30,7 @@ function App() {
     return out;
   }
   var TRIANGLE_POSITIONS = regularPolygon(6);
-  var TRIANGLE_COLORS = new Uint32Array([ 0xffff0000, 0xff00ff00, 0xff0000ff, 0xffff0000, 0xff00ff00, 0xff0000ff, ]);
+  var TRIANGLE_COLORS = new Uint32Array([ 0xffff0000, 0xff00ff00, ]);
   
   var vb = Filament.VertexBuffer.Builder()
     .vertexCount(TRIANGLE_POSITIONS.length / 2)
