@@ -170,7 +170,7 @@ function App() {
     var scale = 10;
     var points = generateHexagonalGridPoints();
     var m = mat4.create();
-    var q = quat4.create();
+    var q = quat.create();
     var s = vec3.set(vec3.create(), scale, scale, 1);
     var tcm = engine.getTransformManager();
     for (var i = 0; i < points.length; i += 3) {
