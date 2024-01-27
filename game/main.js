@@ -19,10 +19,11 @@ function App() {
   
   ////
   function regularPolygon(numSides) {
-    var len = numSides * 2;
+    var len = (numSides + 1) * 2;
     var out = new Float32Array(len);
     var stride = (Math.PI * 2) / numSides;
-    for (var i = 0, r = 0; i < len; i += 2, r += stride) {
+    out[0] = out[1] = 0;
+    for (var i = 2, r = 0; i < len; i += 2, r += stride) {
       out[i] = Math.cos(r);
       out[i + 1] = Math.sin(r);
     }
@@ -32,7 +33,7 @@ function App() {
   var TRIANGLE_COLORS = new Uint32Array([ 0xffff0000, 0xff00ff00, 0xff0000ff, 0xffff0000, 0xff00ff00, 0xff0000ff, ]);
   
   var vb = Filament.VertexBuffer.Builder()
-    .vertexCount(6)
+    .vertexCount(TRIANGLE_POSITIONS.length / 2)
     .bufferCount(2)
     .attribute(VertexAttribute.POSITION, 0, AttributeType.FLOAT2, 0, 8)
     .attribute(VertexAttribute.COLOR, 1, AttributeType.UBYTE4, 0, 4)
@@ -42,10 +43,16 @@ function App() {
   vb.setBufferAt(engine, 1, TRIANGLE_COLORS);
   
   var ib = Filament.IndexBuffer.Builder()
-    .indexCount(9)
+    .indexCount(3 * 5)
     .bufferType(IndexType.USHORT)
     .build(engine);
-  ib.setBuffer(engine, new Uint16Array([0, 1, 2, 2, 3, 4, 4, 5, 0]));
+  ib.setBuffer(engine, new Uint16Array([
+    0, 1, 2,
+    0, 2, 3,
+    0, 3, 4,
+    0, 4, 5,
+    0, 5, 6
+  ]));
 
   var mat = engine.createMaterial('triangle.filamat');
   var matinst = mat.getDefaultInstance();
@@ -174,7 +181,7 @@ function App() {
   }
 
   spawnGrid();
-  var n = 1 / 24;
+  var n = 1 / 16;
   camera.setScaling([ n, n, ]);
   ////
 
