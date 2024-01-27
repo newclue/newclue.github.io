@@ -180,9 +180,6 @@ function App() {
     renderer,
     camera,
     view,
-
-    triangle,
-    mat4,
   };
   return out;
 }
