@@ -2,6 +2,85 @@
 Tutorial: https://github.com/google/filament/blob/main/web/docs/tutorial_triangle.md
 */
 
+function Keyboard() {
+  var keyBindings = new Map();
+  
+  function keydownOnBinding(e) {
+    var key = e.keyCode;
+    var binding = keyBindings.get(key);
+    if (binding) {
+      if (binding.activeKey == null) {
+        binding.activeKey = key;
+        binding.keydown();
+      }
+    }
+  }
+  function keyupOnBinding(e) {
+    var key = e.keyCode;
+    var binding = keyBindings.get(key);
+    if (binding) {
+      if (binding.activeKey == key) {
+        binding.activeKey = null;
+        binding.keyup();
+      }
+    }
+  }
+  
+  function createBinding(keydown, keyup) {
+    var binding = {
+      key1: null,
+      key2: null,
+      activeKey: null,
+      keydown,
+      keyup,
+    };
+    function setKey1(key) {
+      binding.key1 = key;
+      keyBindings.set(key, binding);
+    }
+    function getKey1() {
+      return binding.key1;
+    }
+    function setKey2(key) {
+      binding.key2 = key;
+      keyBindings.set(key, binding);
+    }
+    function getKey2() {
+      return binding.key2;
+    }
+    var out = {};
+    Object.defineProperty(out, 'key2', { set: setKey2, get: getKey2, });
+    Object.defineProperty(out, 'key1', { set: setKey1, get: getKey1, });
+    return out;
+  }
+
+  function createBidirectionalJoystick() {
+  }
+  function createCardinalJoystick() {
+  }
+
+  function enableBindings() {
+    window.addEventListener('keydown', keydownOnBinding);
+    window.addEventListener('keyup', keyupOnBinding);
+  }
+  function disableBindings() {
+    window.removeEventListener('keydown', keydownOnBinding);
+    window.removeEventListener('keyup', keyupOnBinding);
+    keyBindings.forEach(function reset(binding) {
+      binding.activeKey = null;
+    });
+  }
+
+  enableBindings();
+  return {
+    createBinding,
+    createBidirectionalJoystick,
+    createCardinalJoystick,
+    enableBindings,
+    disableBindings,
+  };
+}
+
 function App() {
   // Convenient aliases
   var VertexAttribute = Filament.VertexAttribute;
